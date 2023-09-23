@@ -5,24 +5,24 @@ export default function Todolist() { // component
   //states
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState({ description: "", date: "" });
+  const [isEmpty, setIsEmpty] = useState(false);
 
   //functions
   const handleInputChanged = (e) => {
     // setTodo({...todo, description : e.target.value});
     setTodo({ ...todo, [e.target.name]: e.target.value });
-
   }
 
   const addTodo = () => {
     setTodos([...todos, todo]);
+    setIsEmpty(true);
   }
 
   const itemRows = todos.map((todo, index) =>
     <Fragment>
-      <tr><th>Description</th><th>Date</th></tr>
       <tr key={index}>
-        <td>{todo.description}</td>
         <td>{todo.date}</td>
+        <td>{todo.description}</td>
       </tr>
     </Fragment>
   )
@@ -31,13 +31,19 @@ export default function Todolist() { // component
   return (
     <Fragment>
       <h1>Todo list</h1>
-      <input
+
+      <label htmlFor="description">Description: </label>
+      <input id="description"
         type="text"
         name="description"
         value={todo.description}
         onChange={handleInputChanged}
       />
-      <input type="date"
+
+      <label htmlFor="date">  Date: </label>
+      <input
+        id="date"
+        type="date"
         name="date"
         value={todo.date}
         onChange={handleInputChanged}
@@ -46,11 +52,15 @@ export default function Todolist() { // component
         Add
       </button>
 
-      <table>
-        <tbody>
-          {itemRows}
-        </tbody>
-      </table>
+      {isEmpty ?
+        <table>
+          <tbody>
+            <tr><th>Date</th><th>Description</th></tr>
+            {itemRows}
+          </tbody>
+        </table> : 
+        <p>No tasks...</p>}
+        
     </Fragment>
   )
 
