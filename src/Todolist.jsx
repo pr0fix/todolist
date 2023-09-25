@@ -1,28 +1,38 @@
 import { Fragment } from "react";
 import { useState } from "react"
 
-export default function Todolist() { // component
-  //states
+export default function Todolist() {
+
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState({ description: "", date: "" });
   const [isEmpty, setIsEmpty] = useState(false);
 
-  //functions
+  // Sets todo date and description
   const handleInputChanged = (e) => {
-    // setTodo({...todo, description : e.target.value});
     setTodo({ ...todo, [e.target.name]: e.target.value });
   }
 
+  // Adds a new todo into todolist
   const addTodo = () => {
     setTodos([...todos, todo]);
     setIsEmpty(true);
   }
+
+  // When delete button is clicked this function handles deletion from todolist
+  const handleDeleteRow = (index) => {
+    let reduceTodo = [...todos];
+    reduceTodo.splice(index, 1);
+    setTodos(reduceTodo);
+
+  }
+
 
   const itemRows = todos.map((todo, index) =>
     <Fragment>
       <tr key={index}>
         <td>{todo.date}</td>
         <td>{todo.description}</td>
+        <td><button onClick={() => handleDeleteRow(index)}>Delete</button></td>
       </tr>
     </Fragment>
   )
@@ -58,9 +68,9 @@ export default function Todolist() { // component
             <tr><th>Date</th><th>Description</th></tr>
             {itemRows}
           </tbody>
-        </table> : 
+        </table> :
         <p>No tasks...</p>}
-        
+
     </Fragment>
   )
 
