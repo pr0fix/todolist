@@ -1,11 +1,12 @@
 import { Fragment } from "react";
-import { useState } from "react"
+import { useState } from "react";
+import Todotable from "./components/Todotable";
 
 export default function Todolist() {
 
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState({ description: "", date: "" });
-  const [isEmpty, setIsEmpty] = useState(false);
+  const [hasNoData, setHasNoData] = useState(true);
 
   // Sets todo date and description
   const handleInputChanged = (e) => {
@@ -15,7 +16,7 @@ export default function Todolist() {
   // Adds a new todo into todolist
   const addTodo = () => {
     setTodos([...todos, todo]);
-    setIsEmpty(true);
+    setHasNoData(false);
   }
 
   // When delete button is clicked this function handles deletion from todolist
@@ -26,7 +27,7 @@ export default function Todolist() {
 
   }
 
-
+  // Function to map each item in list and create a table row for each item.
   const itemRows = todos.map((todo, index) =>
     <Fragment>
       <tr key={index}>
@@ -62,14 +63,7 @@ export default function Todolist() {
         Add
       </button>
 
-      {isEmpty ?
-        <table>
-          <tbody>
-            <tr><th>Date</th><th>Description</th></tr>
-            {itemRows}
-          </tbody>
-        </table> :
-        <p>No tasks...</p>}
+      <Todotable hasNoData={hasNoData} itemRows={itemRows} />
 
     </Fragment>
   )
