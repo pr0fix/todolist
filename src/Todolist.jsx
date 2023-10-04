@@ -5,7 +5,7 @@ import Todotable from "./components/Todotable";
 export default function Todolist() {
 
   const [todos, setTodos] = useState([]);
-  const [todo, setTodo] = useState({ description: "", date: "" });
+  const [todo, setTodo] = useState({ description: "", date: "", priority: "" });
   const [hasNoData, setHasNoData] = useState(true);
 
   // Sets todo date and description
@@ -16,8 +16,8 @@ export default function Todolist() {
   // Adds a new todo into todolist
   const addTodo = () => {
     if (
-      todo.description.trim() === '' || todo.date.trim() === '') {
-      alert("Date/description cannot be empty!")
+      todo.description.trim() === '' || todo.date.trim() === '' || todo.priority.trim() === '') {
+      alert("Input fields cannot be empty!")
     } else {
       setTodos([...todos, todo]);
       setHasNoData(false);
@@ -31,16 +31,6 @@ export default function Todolist() {
     setTodos(deleteTodo);
   }
 
-  // Function to map each item in list and create a table row for each item.
-  const itemRows = todos.map((todo, index) =>
-    <Fragment>
-      <tr key={index}>
-        <td>{todo.date}</td>
-        <td>{todo.description}</td>
-        <td><button onClick={() => handleDeleteRow(index)}>Delete</button></td>
-      </tr>
-    </Fragment>
-  )
 
   //return 
   return (
@@ -63,11 +53,23 @@ export default function Todolist() {
         value={todo.date}
         onChange={handleInputChanged}
       />
+
+      <label htmlFor="priority">  Priority: </label>
+      <input
+        id="priority"
+        type="text"
+        name="priority"
+        value={todo.priority}
+        onChange={handleInputChanged}
+      />
       <button onClick={addTodo}>
         Add
       </button>
 
-      <Todotable hasNoData={hasNoData} itemRows={itemRows} />
+      <Todotable
+        todos={todos}
+        hasNoData={hasNoData}
+        handleDeleteRow={handleDeleteRow} />
 
     </Fragment>
   )
