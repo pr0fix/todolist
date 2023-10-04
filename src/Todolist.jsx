@@ -15,16 +15,20 @@ export default function Todolist() {
 
   // Adds a new todo into todolist
   const addTodo = () => {
-    setTodos([...todos, todo]);
-    setHasNoData(false);
+    if (
+      todo.description.trim() === '' || todo.date.trim() === '') {
+      alert("Date/description cannot be empty!")
+    } else {
+      setTodos([...todos, todo]);
+      setHasNoData(false);
+    }
   }
 
   // When delete button is clicked this function handles deletion from todolist
   const handleDeleteRow = (index) => {
-    let reduceTodo = [...todos];
-    reduceTodo.splice(index, 1);
-    setTodos(reduceTodo);
-
+    let deleteTodo = [...todos];
+    deleteTodo.splice(index, 1);
+    setTodos(deleteTodo);
   }
 
   // Function to map each item in list and create a table row for each item.
