@@ -1,10 +1,13 @@
 import './App.css'
-import Todolist from './todolist'
+import TabApp from './components/TabApp'
+import { Stack } from '@mui/material'
+
 
 export default function App() {
   return (
-    <Todolist />
+    <Stack justifyContent="center" alignItems="center">
+    <TabApp/>
+    </Stack>
   )
 }
 
-//export default App
